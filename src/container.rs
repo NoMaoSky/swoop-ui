@@ -6,7 +6,9 @@ use bevy_ui::prelude::*;
 
 use crate::UiToBundle;
 
+/// Grid layout container
 pub mod grid;
+/// Flex layout container
 pub mod stack;
 
 pub mod prelude {

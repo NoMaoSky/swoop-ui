@@ -1,9 +1,38 @@
+//! **Swoop UI** is a modular, ergonomic layout toolkit built on top of Bevy UI.
+//! It introduces expressive layout containers like `HStack`, `VStack`, `HGrid`, and `VGrid`,
+//! supporting fluent syntax for padding, spacing, border, and background styling.
+//!
+//! # UI Layout Overview
+//!
+//! This crate defines a menu bar container using a horizontal stack layout:
+//!
+//! ```rust
+//! use bevy::prelude::*;
+//! use swoop_ui::prelude::*;
+//!
+//! fn setup(mut commands: Commands) {
+//!     commands.spawn((
+//!         HStack::new(AlignItems::Start, Val::Auto)
+//!             .background_color(Srgba::WHITE.into())
+//!             .justify_content(JustifyContent::Start)
+//!             .pack(),
+//!     ));
+//! }
+//! ```
+//!
+//! - `HStack` creates a horizontal layout with children aligned at the top.
+//! - The background color is set using the `MENU_BAR_BACKGROUND` value for theme consistency.
+//! - Contents are left-aligned using `JustifyContent::Start`.
+//!
+//! The layout is finalized with `.pack()` and passed into `commands.spawn` to be registered in the entity world.
+
 use std::borrow::Cow;
 
 use bevy_app::prelude::*;
 use bevy_ecs::prelude::*;
 use bevy_ui::prelude::*;
 
+/// Layouts and containers
 pub mod container;
 
 pub mod prelude {
@@ -11,6 +40,7 @@ pub mod prelude {
     pub use super::{SwoopUiPlugin, UiBase, UiToBundle};
 }
 
+/// Reserved for future addition of system functions
 pub struct SwoopUiPlugin;
 
 /// Provides common builder-style methods for UI configuration

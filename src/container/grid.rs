@@ -2,7 +2,9 @@ use bevy_ui::prelude::*;
 
 use crate::UiBase;
 
+/// Horizontal Grid Layout
 pub mod h_grid;
+/// Vertical Grid Layout
 pub mod v_grid;
 
 pub mod prelude {
