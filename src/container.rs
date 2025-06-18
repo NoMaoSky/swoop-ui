@@ -15,9 +15,12 @@ pub mod prelude {
     pub use super::{BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle};
 }
 
+/// Provides background configuration for a UI container
 pub trait BackgroundContainer {
+    /// Returns a mutable reference to the current background style
     fn background_node(&mut self) -> &mut BackgroundStyle;
 
+    /// Sets a solid color as the background
     fn background_color(mut self, color: impl Into<Color>) -> Self
     where
         Self: Sized,
@@ -26,6 +29,7 @@ pub trait BackgroundContainer {
         self
     }
 
+    /// Sets an image as the background
     fn background_image(mut self, image: Handle<Image>) -> Self
     where
         Self: Sized,
@@ -35,8 +39,11 @@ pub trait BackgroundContainer {
     }
 }
 
+/// Defines how a container should be visually styled in the background
 pub enum BackgroundStyle {
+    /// A solid background color
     Color(Color),
+    /// A textured background image
     Image(Handle<Image>),
 }
 
@@ -60,9 +67,12 @@ impl Default for BackgroundStyle {
     }
 }
 
+/// Provides border configuration for a UI container
 pub trait BorderContainer {
+    /// Returns a mutable reference to the current border style
     fn border_node(&mut self) -> &mut BorderStyle;
 
+    /// Sets the border color
     fn border_color(mut self, border_color: impl Into<Color>) -> Self
     where
         Self: Sized,
@@ -71,6 +81,7 @@ pub trait BorderContainer {
         self
     }
 
+    /// Sets the border radius
     fn border_radius(mut self, border_radius: BorderRadius) -> Self
     where
         Self: Sized,
@@ -80,8 +91,11 @@ pub trait BorderContainer {
     }
 }
 
+/// Describes the style for rendering borders around a UI container
 pub struct BorderStyle {
+    /// The corner radius for the border
     border_radius: BorderRadius,
+    /// The color of the border
     border_color: BorderColor,
 }
 

@@ -6,10 +6,16 @@ use crate::{UiBase, UiToBundle};
 
 use super::GridContainer;
 
+/// A vertical grid layout container that arranges children using `GridAutoFlow::Column`.
+/// Supports background and border styling, and allows for dynamic grid track configuration.
 pub struct VGrid {
+    /// The name component used to identify the UI node
     name: Name,
+    /// The layout node controlling grid structure, flow, and spacing
     node: Node,
+    /// Border rendering style (color and radius)
     border: BorderStyle,
+    /// Background rendering style (color or image)
     background: BackgroundStyle,
 }
 

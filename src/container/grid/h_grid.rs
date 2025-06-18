@@ -6,10 +6,16 @@ use crate::{UiBase, UiToBundle};
 
 use super::GridContainer;
 
+/// A horizontal grid layout container that arranges children using `GridAutoFlow::Row`.
+/// Supports background and border styling as well as custom grid track configuration.
 pub struct HGrid {
+    /// The name component used to identify the UI node
     name: Name,
+    /// The layout node controlling grid behavior and spacing
     node: Node,
+    /// Border rendering style (color and radius)
     border: BorderStyle,
+    /// Background rendering style (color or image)
     background: BackgroundStyle,
 }
 

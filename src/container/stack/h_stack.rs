@@ -6,10 +6,16 @@ use crate::{UiBase, UiToBundle};
 
 use super::StackContainer;
 
+/// A horizontal stack layout container that arranges children in a row.
+/// It supports background and border styling, and conforms to StackContainer behavior.
 pub struct HStack {
+    /// The name component used to identify the UI node
     name: Name,
+    /// The layout node controlling size, flex direction, spacing, etc.
     node: Node,
+    /// Border rendering style (color and radius)
     border: BorderStyle,
+    /// Background rendering style (color or image)
     background: BackgroundStyle,
 }
 

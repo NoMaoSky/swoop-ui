@@ -13,11 +13,15 @@ pub mod prelude {
 
 pub struct SwoopUiPlugin;
 
+/// Provides common builder-style methods for UI configuration
 pub trait UiBase {
+    /// Returns a mutable reference to the entity's Name component
     fn name_node(&mut self) -> &mut Name;
 
+    /// Returns a mutable reference to the entity's Node component
     fn node_node(&mut self) -> &mut Node;
 
+    /// Sets the Name component
     fn name(mut self, name: impl Into<Cow<'static, str>>) -> Self
     where
         Self: Sized,
@@ -26,6 +30,7 @@ pub trait UiBase {
         self
     }
 
+    /// Applies padding to the Node
     fn padding(mut self, padding: UiRect) -> Self
     where
         Self: Sized,
@@ -34,6 +39,7 @@ pub trait UiBase {
         self
     }
 
+    /// Sets width and height of the Node
     fn frame(mut self, width: Val, height: Val) -> Self
     where
         Self: Sized,
@@ -44,6 +50,7 @@ pub trait UiBase {
         self
     }
 
+    /// Sets the width of the Node
     fn width(mut self, width: Val) -> Self
     where
         Self: Sized,
@@ -52,6 +59,7 @@ pub trait UiBase {
         self
     }
 
+    /// Sets the height of the Node
     fn height(mut self, height: Val) -> Self
     where
         Self: Sized,
@@ -61,7 +69,9 @@ pub trait UiBase {
     }
 }
 
+/// Converts a custom UI builder into a Bevy-compatible Bundle
 pub trait UiToBundle {
+    /// Consumes the UI builder and produces a bundle
     fn pack(self) -> impl Bundle;
 }
 
