@@ -25,10 +25,10 @@ impl Default for VGrid {
             name: Name::new("VGrid"),
             node: Node {
                 display: Display::Grid,
-                grid_auto_flow: GridAutoFlow::Column,
+                grid_auto_flow: GridAutoFlow::Row,
                 justify_content: JustifyContent::Start,
                 align_items: AlignItems::Center,
-                row_gap: Val::Px(8.0),
+                row_gap: Val::Px(0.0),
                 ..Default::default()
             },
             border: BorderStyle::default(),
@@ -49,12 +49,12 @@ impl UiBase for VGrid {
 
 impl GridContainer for VGrid {
     fn grid_auto_track(mut self, tracks: Vec<GridTrack>) -> Self {
-        self.node_node().grid_auto_columns = tracks;
+        self.node_node().grid_auto_rows = tracks;
         self
     }
 
     fn grid_template_track(mut self, tracks: Vec<RepeatedGridTrack>) -> Self {
-        self.node_node().grid_template_columns = tracks;
+        self.node_node().grid_template_rows = tracks;
         self
     }
 }
