@@ -70,8 +70,8 @@ pub trait GridContainer: UiBase + Default {
     fn spacing(mut self, gap: Val) -> Self {
         let node = self.node_node();
         match node.grid_auto_flow {
-            GridAutoFlow::Row | GridAutoFlow::RowDense => node.column_gap = gap,
-            GridAutoFlow::Column | GridAutoFlow::ColumnDense => node.row_gap = gap,
+            GridAutoFlow::Row | GridAutoFlow::RowDense => node.row_gap = gap,
+            GridAutoFlow::Column | GridAutoFlow::ColumnDense => node.column_gap = gap,
         }
 
         self
