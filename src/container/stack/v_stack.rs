@@ -1,27 +1,28 @@
 use bevy_ecs::prelude::*;
 use bevy_ui::prelude::*;
 
+use crate::container::{BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle};
 use crate::{UiBase, UiToBundle};
 
-use super::{BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle, StackContainer};
+use super::StackContainer;
 
-pub struct HStack {
+pub struct VStack {
     name: Name,
     node: Node,
     border: BorderStyle,
     background: BackgroundStyle,
 }
 
-impl Default for HStack {
+impl Default for VStack {
     fn default() -> Self {
         Self {
-            name: Name::new("HStack"),
+            name: Name::new("VStack"),
             node: Node {
                 display: Display::Flex,
-                flex_direction: FlexDirection::Row,
+                flex_direction: FlexDirection::Column,
                 justify_content: JustifyContent::Start,
                 align_items: AlignItems::Center,
-                column_gap: Val::Px(8.0),
+                row_gap: Val::Px(8.0),
                 ..Default::default()
             },
             border: BorderStyle::default(),
@@ -30,7 +31,7 @@ impl Default for HStack {
     }
 }
 
-impl UiBase for HStack {
+impl UiBase for VStack {
     fn name_node(&mut self) -> &mut Name {
         &mut self.name
     }
@@ -40,25 +41,21 @@ impl UiBase for HStack {
     }
 }
 
-impl StackContainer for HStack {
-    fn node_node(&mut self) -> &mut Node {
-        &mut self.node
-    }
-}
+impl StackContainer for VStack {}
 
-impl BackgroundContainer for HStack {
+impl BackgroundContainer for VStack {
     fn background_node(&mut self) -> &mut BackgroundStyle {
         &mut self.background
     }
 }
 
-impl BorderContainer for HStack {
+impl BorderContainer for VStack {
     fn border_node(&mut self) -> &mut BorderStyle {
         &mut self.border
     }
 }
 
-impl UiToBundle for HStack {
+impl UiToBundle for VStack {
     fn pack(self) -> impl Bundle {
         let name = self.name;
         let border = self.border.pack();
