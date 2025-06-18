@@ -2570,7 +2570,7 @@ dependencies = [
 
 [[package]]
 name = "swoop-ui"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "bevy_app",
  "bevy_asset",
