@@ -3,6 +3,13 @@ name = "swoop-ui"
 version = "0.1.0"
 edition = "2024"
 
+authors = ["RenDaoEr <rendaoer@outlook.com>"]
+description = "A swifuUI style bevy engine ui toolkit"
+repository = "https://github.com/NoMaoSky/swoop-ui"
+license = "MIT OR Apache-2.0"
+keywords = ["bevy", "ui"]
+categories = ["game-development"]
+
 [dependencies]
 bevy_app = "0.16"
 bevy_asset = "0.16.1"
