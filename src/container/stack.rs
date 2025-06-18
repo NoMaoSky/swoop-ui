@@ -2,7 +2,9 @@ use bevy_ui::prelude::*;
 
 use crate::UiBase;
 
+/// Horizontal Flex Layout
 pub mod h_stack;
+/// Vertical Flex Layout
 pub mod v_stack;
 
 pub mod prelude {
