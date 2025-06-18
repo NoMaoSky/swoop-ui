@@ -6,62 +6,21 @@ use bevy_ui::prelude::*;
 
 use crate::UiToBundle;
 
-pub mod h_stack;
-pub mod v_stack;
+pub mod grid;
+pub mod stack;
 
 pub mod prelude {
-    pub use super::h_stack::*;
-    pub use super::v_stack::*;
-    pub use super::{
-        BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle, StackContainer,
-    };
+    pub use super::grid::prelude::*;
+    pub use super::stack::prelude::*;
+    pub use super::{BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle};
 }
 
-pub trait StackContainer: Default {
-    fn node_node(&mut self) -> &mut Node;
-
-    fn new(align_items: AlignItems, gap: Val) -> Self
-    where
-        Self: Sized,
-    {
-        let mut stack = Self::default();
-        stack.node_node().align_items = align_items;
-        stack.spacing(gap)
-    }
-
-    fn justify_content(mut self, justify: JustifyContent) -> Self
-    where
-        Self: Sized,
-    {
-        self.node_node().justify_content = justify;
-        self
-    }
-
-    fn align_items(mut self, align_items: AlignItems) -> Self
-    where
-        Self: Sized,
-    {
-        self.node_node().align_items = align_items;
-        self
-    }
-
-    fn spacing(mut self, gap: Val) -> Self
-    where
-        Self: Sized,
-    {
-        let node = self.node_node();
-        match node.flex_direction {
-            FlexDirection::Row => node.column_gap = gap,
-            FlexDirection::Column => node.row_gap = gap,
-            _ => {}
-        }
-        self
-    }
-}
-
+/// Provides background configuration for a UI container
 pub trait BackgroundContainer {
+    /// Returns a mutable reference to the current background style
     fn background_node(&mut self) -> &mut BackgroundStyle;
 
+    /// Sets a solid color as the background
     fn background_color(mut self, color: impl Into<Color>) -> Self
     where
         Self: Sized,
@@ -70,6 +29,7 @@ pub trait BackgroundContainer {
         self
     }
 
+    /// Sets an image as the background
     fn background_image(mut self, image: Handle<Image>) -> Self
     where
         Self: Sized,
@@ -79,8 +39,11 @@ pub trait BackgroundContainer {
     }
 }
 
+/// Defines how a container should be visually styled in the background
 pub enum BackgroundStyle {
+    /// A solid background color
     Color(Color),
+    /// A textured background image
     Image(Handle<Image>),
 }
 
@@ -104,9 +67,12 @@ impl Default for BackgroundStyle {
     }
 }
 
+/// Provides border configuration for a UI container
 pub trait BorderContainer {
+    /// Returns a mutable reference to the current border style
     fn border_node(&mut self) -> &mut BorderStyle;
 
+    /// Sets the border color
     fn border_color(mut self, border_color: impl Into<Color>) -> Self
     where
         Self: Sized,
@@ -115,6 +81,7 @@ pub trait BorderContainer {
         self
     }
 
+    /// Sets the border radius
     fn border_radius(mut self, border_radius: BorderRadius) -> Self
     where
         Self: Sized,
@@ -124,8 +91,11 @@ pub trait BorderContainer {
     }
 }
 
+/// Describes the style for rendering borders around a UI container
 pub struct BorderStyle {
+    /// The corner radius for the border
     border_radius: BorderRadius,
+    /// The color of the border
     border_color: BorderColor,
 }
 
