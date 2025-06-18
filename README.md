@@ -1,4 +1,9 @@
 # 🧱 Swoop UI
+[![Crates.io](https://img.shields.io/crates/v/swoop-ui)](https://crates.io/crates/swoop-ui)
+[![docs](https://docs.rs/swoop-ui/badge.svg)](https://docs.rs/swoop-ui/)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/NoMaoSky/swoop-ui/blob/main/LICENSE)
+[![Crates.io](https://img.shields.io/crates/d/swoop-ui)](https://crates.io/crates/swoop-ui)
+[![Following released Bevy versions](https://img.shields.io/badge/Bevy%20tracking-released%20version-lightblue)](https://bevyengine.org/learn/quick-start/plugin-development/#main-branch-tracking)
 
 **Swoop UI** is a modular, ergonomic layout toolkit built on top of Bevy UI. It introduces expressive layout containers like `HStack`, `VStack`, `HGrid`, and `VGrid`, supporting fluent syntax for padding, spacing, border, and background styling.
 
