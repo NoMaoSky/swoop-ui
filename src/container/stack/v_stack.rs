@@ -28,7 +28,7 @@ impl Default for VStack {
                 flex_direction: FlexDirection::Column,
                 justify_content: JustifyContent::Start,
                 align_items: AlignItems::Center,
-                row_gap: Val::Px(8.0),
+                row_gap: Val::Px(0.0),
                 ..Default::default()
             },
             border: BorderStyle::default(),

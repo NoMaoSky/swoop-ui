@@ -28,7 +28,7 @@ impl Default for HStack {
                 flex_direction: FlexDirection::Row,
                 justify_content: JustifyContent::Start,
                 align_items: AlignItems::Center,
-                column_gap: Val::Px(8.0),
+                column_gap: Val::Px(0.0),
                 ..Default::default()
             },
             border: BorderStyle::default(),

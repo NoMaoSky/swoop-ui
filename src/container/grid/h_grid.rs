@@ -25,10 +25,10 @@ impl Default for HGrid {
             name: Name::new("HGrid"),
             node: Node {
                 display: Display::Grid,
-                grid_auto_flow: GridAutoFlow::Row,
+                grid_auto_flow: GridAutoFlow::Column,
                 justify_content: JustifyContent::Start,
                 align_items: AlignItems::Center,
-                column_gap: Val::Px(8.0),
+                column_gap: Val::Px(0.0),
                 ..Default::default()
             },
             border: BorderStyle::default(),
