@@ -48,14 +48,14 @@ pub mod prelude {
     pub use super::border::*;
     pub use super::container::prelude::*;
     pub use super::shadow::*;
-    pub use super::{SwoopUiPlugin, View, ViewPack};
+    pub use super::{SwoopUiPlugin, View};
 }
 
 /// Reserved for future addition of system functions
 pub struct SwoopUiPlugin;
 
 /// Provides common builder-style methods for UI configuration
-pub trait View: Debug + Clone + PartialEq + Default {
+pub trait View: Bundle + Debug + Clone + Default {
     /// Returns a mutable reference to the entity's Name component
     fn name_node(&mut self) -> &mut Name;
 
@@ -93,12 +93,6 @@ pub trait View: Debug + Clone + PartialEq + Default {
         self.node_node().height = height;
         self
     }
-}
-
-/// Converts a custom UI builder into a Bevy-compatible Bundle
-pub trait ViewPack {
-    /// Consumes the UI builder and produces a bundle
-    fn pack(self) -> impl Bundle;
 }
 
 impl Plugin for SwoopUiPlugin {
