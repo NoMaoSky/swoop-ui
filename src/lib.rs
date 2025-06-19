@@ -1,6 +1,9 @@
 //! **Swoop UI** is a modular, ergonomic layout toolkit built on top of Bevy UI.
 //! It introduces expressive layout containers like `HStack`, `VStack`, `HGrid`, and `VGrid`,
 //! supporting fluent syntax for padding, spacing, border, and background styling.
+//! Now only some packaged candies are generated, no additional functions, maybe they will be added later,
+//! a plugin is reserved, but it has not been used yet
+//!
 //!
 //! # UI Layout Overview
 //!
@@ -24,7 +27,7 @@
 //! - The background color is set using the impl Into<Color> value.
 //! - Contents are left-aligned using `JustifyContent::Start`.
 //!
-//! The layout is finalized with `.pack()` and passed into `commands.spawn` to be spawn in the entity world.
+//! Because the impl Bundle is implemented, it can be directly generated using commands.spawn
 
 use std::borrow::Cow;
 use std::fmt::Debug;
@@ -40,12 +43,15 @@ pub mod border;
 // Shadow UI Trait
 pub mod shadow;
 
+/// Button
+pub mod button;
 /// Layouts and containers
 pub mod container;
 
 pub mod prelude {
     pub use super::background::*;
     pub use super::border::*;
+    pub use super::button::prelude::*;
     pub use super::container::prelude::*;
     pub use super::shadow::*;
     pub use super::{SwoopUiPlugin, View};
@@ -56,6 +62,17 @@ pub struct SwoopUiPlugin;
 
 /// Provides common builder-style methods for UI configuration
 pub trait View: Bundle + Debug + Clone + Default {
+    /// Short Default Method
+    fn new() -> Self {
+        Self::default()
+    }
+
+    fn from_name(name: impl Into<Cow<'static, str>>) -> Self {
+        let mut view = Self::default();
+        view.name_node().set(name);
+        view
+    }
+
     /// Returns a mutable reference to the entity's Name component
     fn name_node(&mut self) -> &mut Name;
 

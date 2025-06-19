@@ -35,3 +35,12 @@ pub struct BackgroundStyle {
     /// A textured background image
     image: ImageNode,
 }
+
+impl BackgroundStyle {
+    pub fn button() -> Self {
+        Self {
+            color: BackgroundColor(Srgba::WHITE.into()),
+            image: ImageNode::default(),
+        }
+    }
+}

@@ -9,17 +9,20 @@ pub mod v_grid;
 
 pub mod prelude {
     pub use super::GridView;
-    pub use super::h_grid::*;
-    pub use super::v_grid::*;
+    pub use super::h_grid::HGrid;
+    pub use super::v_grid::VGrid;
 }
 
 /// Provides a fluent interface for configuring grid layout containers
 pub trait GridView: View {
-    /// Creates a new grid container with specified alignment and spacing
-    fn new(align_items: AlignItems, gap: Val) -> Self {
-        let mut stack = Self::default();
-        stack.node_node().align_items = align_items;
-        stack.spacing(gap)
+    fn from_auto_track(tracks: Vec<GridTrack>) -> Self {
+        let grid = Self::default();
+        grid.grid_auto_track(tracks)
+    }
+
+    fn from_template_track(tracks: Vec<RepeatedGridTrack>) -> Self {
+        let grid = Self::default();
+        grid.grid_template_track(tracks)
     }
 
     /// Toggles the grid flow between Row ⇄ RowDense or Column ⇄ ColumnDense

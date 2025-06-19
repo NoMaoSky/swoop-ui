@@ -8,13 +8,19 @@
 # I found that impl Bundle is the best way, right?
 
 **Swoop UI** is a modular, ergonomic layout toolkit built on top of Bevy UI. It introduces expressive layout containers like `HStack`, `VStack`, `HGrid`, and `VGrid`, supporting fluent syntax for padding, spacing, border, and background styling.
+Now only some packaged candies are generated, no additional functions, maybe they will be added later, a plugin is reserved, but it has not been used yet
+
+| Type       | Flex container | Grid container | Button  |
+|------------|----------------|----------------|---------|
+| Horizontal | HStack         | HGrid          | HButton |
+| Vertical   | VStack         | VGrid          | VButton |
+
 
 ## ✨ Features
 
 - ✅ Chainable builder-style API (e.g. `.frame().padding().background_color()`)
 - ✅ Grid and Stack layout containers with uniform interface
-- ✅ Modular traits like `UiBase`, `StackContainer`, `GridContainer`, etc.
-- ✅ Seamless integration with Bevy's ECS via `.pack()` → `impl Bundle`
+- ✅ Modular traits like `View`, `StackView`, `GridView`, `BorderView`, `BackgroundView`, `ShadowView`, etc.
 
 ---
 
@@ -24,17 +30,18 @@
 use swoop_ui::prelude::*;
 
 fn setup_ui(mut commands: Commands) {
-    let layout = HStack::new(AlignItems::Center, Val::Px(12.0))
-        .frame(Val::Percent(100.0), Val::Px(64.0))
-        .padding(UiRect::horizontal(Val::Px(16.0)))
-        .background_color(Color::rgb(0.1, 0.1, 0.2))
-        .border_color(Color::WHITE)
-        .border_radius(BorderRadius::all(Val::Px(8.0)))
-        .name("MainHeader");
-
-    commands.spawn(layout.pack());
+    commands.spawn(
+        HStack::new()
+            .name("MainHeader1")
+            .frame(Val::Percent(100.0), Val::Px(64.0))
+            .padding(UiRect::horizontal(Val::Px(16.0)))
+            .background_color(Color::rgb(0.1, 0.1, 0.2))
+            .border_color(Color::WHITE)
+            .border_radius(BorderRadius::all(Val::Px(8.0)))
+    );   
 }
 ```
+## Bevy Engine version compatibility
 
 | bevy  | swoop-ui |
 |-------|----------|
