@@ -42,6 +42,8 @@ pub mod border;
 pub mod container;
 
 pub mod prelude {
+    pub use super::background::*;
+    pub use super::border::*;
     pub use super::container::prelude::*;
     pub use super::{SwoopUiPlugin, View, ViewPack};
 }
