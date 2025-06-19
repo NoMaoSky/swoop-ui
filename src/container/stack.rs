@@ -1,6 +1,6 @@
 use bevy_ui::prelude::*;
 
-use crate::UiBase;
+use crate::View;
 
 /// Horizontal Flex Layout
 pub mod h_stack;
@@ -8,13 +8,13 @@ pub mod h_stack;
 pub mod v_stack;
 
 pub mod prelude {
-    pub use super::StackContainer;
+    pub use super::StackView;
     pub use super::h_stack::*;
     pub use super::v_stack::*;
 }
 
 /// Provides a flexible layout interface for stack-style containers (e.g. HStack, VStack)
-pub trait StackContainer: UiBase + Default {
+pub trait StackView: View {
     /// Creates a new stack container with specified alignment and spacing
     fn new(align_items: AlignItems, gap: Val) -> Self {
         let mut stack = Self::default();

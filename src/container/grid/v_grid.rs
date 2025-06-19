@@ -1,13 +1,15 @@
 use bevy_ecs::prelude::*;
 use bevy_ui::prelude::*;
 
-use crate::container::{BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle};
-use crate::{UiBase, UiToBundle};
+use crate::background::{BackgroundStyle, BackgroundView};
+use crate::border::{BorderStyle, BorderView};
+use crate::{View, ViewPack};
 
-use super::GridContainer;
+use super::GridView;
 
 /// A vertical grid layout container that arranges children using `GridAutoFlow::Column`.
 /// Supports background and border styling, and allows for dynamic grid track configuration.
+#[derive(Debug, Clone, PartialEq)]
 pub struct VGrid {
     /// The name component used to identify the UI node
     name: Name,
@@ -37,7 +39,7 @@ impl Default for VGrid {
     }
 }
 
-impl UiBase for VGrid {
+impl View for VGrid {
     fn name_node(&mut self) -> &mut Name {
         &mut self.name
     }
@@ -47,7 +49,7 @@ impl UiBase for VGrid {
     }
 }
 
-impl GridContainer for VGrid {
+impl GridView for VGrid {
     fn grid_auto_track(mut self, tracks: Vec<GridTrack>) -> Self {
         self.node_node().grid_auto_rows = tracks;
         self
@@ -59,19 +61,19 @@ impl GridContainer for VGrid {
     }
 }
 
-impl BackgroundContainer for VGrid {
+impl BackgroundView for VGrid {
     fn background_node(&mut self) -> &mut BackgroundStyle {
         &mut self.background
     }
 }
 
-impl BorderContainer for VGrid {
+impl BorderView for VGrid {
     fn border_node(&mut self) -> &mut BorderStyle {
         &mut self.border
     }
 }
 
-impl UiToBundle for VGrid {
+impl ViewPack for VGrid {
     fn pack(self) -> impl Bundle {
         let name = self.name;
         let border = self.border.pack();
