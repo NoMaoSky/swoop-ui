@@ -1,16 +1,16 @@
 use bevy_ecs::prelude::*;
 use bevy_ui::prelude::*;
 
-use crate::View;
 use crate::background::{BackgroundStyle, BackgroundView};
 use crate::border::{BorderStyle, BorderView};
 use crate::shadow::ShadowView;
+use crate::{View, ViewPack};
 
 use super::GridView;
 
 /// A horizontal grid layout container that arranges children using `GridAutoFlow::Row`.
 /// Supports background and border styling as well as custom grid track configuration.
-#[derive(Bundle, Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct HGrid {
     /// The name component used to identify the UI node
     name: Name,
@@ -80,5 +80,14 @@ impl BorderView for HGrid {
 impl ShadowView for HGrid {
     fn shadow_node(&mut self) -> &mut BoxShadow {
         &mut self.shadow
+    }
+}
+
+impl ViewPack for HGrid {
+    fn pack(self) -> impl Bundle {
+        let name = self.name;
+        let border = self.border.pack();
+        let background = self.background.pack();
+        (name, self.node, border, background, self.shadow)
     }
 }

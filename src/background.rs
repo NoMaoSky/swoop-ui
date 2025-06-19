@@ -4,7 +4,7 @@ use bevy_ecs::prelude::*;
 use bevy_image::prelude::*;
 use bevy_ui::prelude::*;
 
-use crate::View;
+use crate::{View, ViewPack};
 
 /// Provides background configuration for a UI container
 pub trait BackgroundView: View {
@@ -13,25 +13,42 @@ pub trait BackgroundView: View {
 
     /// Sets a solid color as the background
     fn background_color(mut self, color: impl Into<Color>) -> Self {
-        self.background_node().color = BackgroundColor(color.into());
+        *self.background_node() = BackgroundStyle::Color(color.into());
         self
     }
 
     /// Sets an image as the background
     fn background_image(mut self, image: Handle<Image>) -> Self {
-        self.background_node().image = ImageNode {
-            image,
-            ..Default::default()
-        };
+        *self.background_node() = BackgroundStyle::Image(image);
         self
     }
 }
 
 /// Defines how a container should be visually styled in the background
-#[derive(Bundle, Debug, Clone, Default)]
-pub struct BackgroundStyle {
+#[derive(Debug, Clone, PartialEq)]
+pub enum BackgroundStyle {
     /// A solid background color
-    color: BackgroundColor,
+    Color(Color),
     /// A textured background image
-    image: ImageNode,
+    Image(Handle<Image>),
+}
+
+impl ViewPack for BackgroundStyle {
+    fn pack(self) -> impl Bundle {
+        match self {
+            BackgroundStyle::Color(color) => (
+                BackgroundColor(color),
+                ImageNode::solid_color(Srgba::NONE.into()),
+            ),
+            BackgroundStyle::Image(handle) => {
+                (BackgroundColor(Srgba::NONE.into()), ImageNode::new(handle))
+            }
+        }
+    }
+}
+
+impl Default for BackgroundStyle {
+    fn default() -> Self {
+        BackgroundStyle::Color(Srgba::NONE.into())
+    }
 }

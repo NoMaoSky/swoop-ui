@@ -2,7 +2,7 @@ use bevy_color::prelude::*;
 use bevy_ecs::prelude::*;
 use bevy_ui::prelude::*;
 
-use crate::View;
+use crate::{View, ViewPack};
 
 /// Provides border configuration for a UI container
 pub trait BorderView: View {
@@ -29,12 +29,18 @@ pub trait BorderView: View {
 }
 
 /// Describes the style for rendering borders around a UI container
-#[derive(Bundle, Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct BorderStyle {
     /// The corner radius for the border
     border_radius: BorderRadius,
     /// The color of the border
     border_color: BorderColor,
+}
+
+impl ViewPack for BorderStyle {
+    fn pack(self) -> impl Bundle {
+        (self.border_radius, self.border_color)
+    }
 }
 
 impl Default for BorderStyle {
