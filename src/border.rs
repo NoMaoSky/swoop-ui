@@ -37,6 +37,15 @@ pub struct BorderStyle {
     border_color: BorderColor,
 }
 
+impl BorderStyle {
+    pub fn button() -> Self {
+        Self {
+            border_radius: BorderRadius::all(Val::Px(10.0)),
+            border_color: BorderColor::default(),
+        }
+    }
+}
+
 impl Default for BorderStyle {
     fn default() -> Self {
         Self {

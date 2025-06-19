@@ -9,17 +9,22 @@ pub mod v_stack;
 
 pub mod prelude {
     pub use super::StackView;
-    pub use super::h_stack::*;
-    pub use super::v_stack::*;
+    pub use super::h_stack::HStack;
+    pub use super::v_stack::VStack;
 }
 
 /// Provides a flexible layout interface for stack-style containers (e.g. HStack, VStack)
 pub trait StackView: View {
-    /// Creates a new stack container with specified alignment and spacing
-    fn new(align_items: AlignItems, gap: Val) -> Self {
+    fn from_justify_content(justify_content: JustifyContent) -> Self {
+        let mut stack = Self::default();
+        stack.node_node().justify_content = justify_content;
+        stack
+    }
+
+    fn from_align_items(align_items: AlignItems) -> Self {
         let mut stack = Self::default();
         stack.node_node().align_items = align_items;
-        stack.spacing(gap)
+        stack
     }
 
     /// Reverses the current flex direction (e.g. Row ⇄ RowReverse, Column ⇄ ColumnReverse)
