@@ -5,8 +5,6 @@
 [![Crates.io](https://img.shields.io/crates/d/swoop-ui)](https://crates.io/crates/swoop-ui)
 [![Following released Bevy versions](https://img.shields.io/badge/Bevy%20tracking-released%20version-lightblue)](https://bevyengine.org/learn/quick-start/plugin-development/#main-branch-tracking)
 
-# I found that impl Bundle is the best way, right?
-
 **Swoop UI** is a modular, ergonomic layout toolkit built on top of Bevy UI. It introduces expressive layout containers like `HStack`, `VStack`, `HGrid`, and `VGrid`, supporting fluent syntax for padding, spacing, border, and background styling.
 
 ## ✨ Features
