@@ -1,13 +1,15 @@
 use bevy_ecs::prelude::*;
 use bevy_ui::prelude::*;
 
-use crate::container::{BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle};
-use crate::{UiBase, UiToBundle};
+use crate::background::{BackgroundStyle, BackgroundView};
+use crate::border::{BorderStyle, BorderView};
+use crate::{View, ViewPack};
 
-use super::StackContainer;
+use super::StackView;
 
 /// A horizontal stack layout container that arranges children in a row.
 /// It supports background and border styling, and conforms to StackContainer behavior.
+#[derive(Debug, Clone, PartialEq)]
 pub struct HStack {
     /// The name component used to identify the UI node
     name: Name,
@@ -37,7 +39,7 @@ impl Default for HStack {
     }
 }
 
-impl UiBase for HStack {
+impl View for HStack {
     fn name_node(&mut self) -> &mut Name {
         &mut self.name
     }
@@ -47,21 +49,21 @@ impl UiBase for HStack {
     }
 }
 
-impl StackContainer for HStack {}
+impl StackView for HStack {}
 
-impl BackgroundContainer for HStack {
+impl BackgroundView for HStack {
     fn background_node(&mut self) -> &mut BackgroundStyle {
         &mut self.background
     }
 }
 
-impl BorderContainer for HStack {
+impl BorderView for HStack {
     fn border_node(&mut self) -> &mut BorderStyle {
         &mut self.border
     }
 }
 
-impl UiToBundle for HStack {
+impl ViewPack for HStack {
     fn pack(self) -> impl Bundle {
         let name = self.name;
         let border = self.border.pack();

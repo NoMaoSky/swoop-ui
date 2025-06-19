@@ -1,13 +1,15 @@
 use bevy_ecs::prelude::*;
 use bevy_ui::prelude::*;
 
-use crate::container::{BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle};
-use crate::{UiBase, UiToBundle};
+use crate::background::{BackgroundStyle, BackgroundView};
+use crate::border::{BorderStyle, BorderView};
+use crate::{View, ViewPack};
 
-use super::GridContainer;
+use super::GridView;
 
 /// A horizontal grid layout container that arranges children using `GridAutoFlow::Row`.
 /// Supports background and border styling as well as custom grid track configuration.
+#[derive(Debug, Clone, PartialEq)]
 pub struct HGrid {
     /// The name component used to identify the UI node
     name: Name,
@@ -37,7 +39,7 @@ impl Default for HGrid {
     }
 }
 
-impl UiBase for HGrid {
+impl View for HGrid {
     fn name_node(&mut self) -> &mut Name {
         &mut self.name
     }
@@ -47,7 +49,7 @@ impl UiBase for HGrid {
     }
 }
 
-impl GridContainer for HGrid {
+impl GridView for HGrid {
     fn grid_auto_track(mut self, tracks: Vec<GridTrack>) -> Self {
         self.node_node().grid_auto_columns = tracks;
         self
@@ -59,19 +61,19 @@ impl GridContainer for HGrid {
     }
 }
 
-impl BackgroundContainer for HGrid {
+impl BackgroundView for HGrid {
     fn background_node(&mut self) -> &mut BackgroundStyle {
         &mut self.background
     }
 }
 
-impl BorderContainer for HGrid {
+impl BorderView for HGrid {
     fn border_node(&mut self) -> &mut BorderStyle {
         &mut self.border
     }
 }
 
-impl UiToBundle for HGrid {
+impl ViewPack for HGrid {
     fn pack(self) -> impl Bundle {
         let name = self.name;
         let border = self.border.pack();

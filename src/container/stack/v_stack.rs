@@ -1,13 +1,15 @@
 use bevy_ecs::prelude::*;
 use bevy_ui::prelude::*;
 
-use crate::container::{BackgroundContainer, BackgroundStyle, BorderContainer, BorderStyle};
-use crate::{UiBase, UiToBundle};
+use crate::background::{BackgroundStyle, BackgroundView};
+use crate::border::{BorderStyle, BorderView};
+use crate::{View, ViewPack};
 
-use super::StackContainer;
+use super::StackView;
 
 /// A vertical stack layout container that arranges children in a column.
 /// Implements background and border styling, and conforms to StackContainer behavior.
+#[derive(Debug, Clone, PartialEq)]
 pub struct VStack {
     /// The name component used to identify the UI node
     name: Name,
@@ -37,7 +39,7 @@ impl Default for VStack {
     }
 }
 
-impl UiBase for VStack {
+impl View for VStack {
     fn name_node(&mut self) -> &mut Name {
         &mut self.name
     }
@@ -47,21 +49,21 @@ impl UiBase for VStack {
     }
 }
 
-impl StackContainer for VStack {}
+impl StackView for VStack {}
 
-impl BackgroundContainer for VStack {
+impl BackgroundView for VStack {
     fn background_node(&mut self) -> &mut BackgroundStyle {
         &mut self.background
     }
 }
 
-impl BorderContainer for VStack {
+impl BorderView for VStack {
     fn border_node(&mut self) -> &mut BorderStyle {
         &mut self.border
     }
 }
 
-impl UiToBundle for VStack {
+impl ViewPack for VStack {
     fn pack(self) -> impl Bundle {
         let name = self.name;
         let border = self.border.pack();

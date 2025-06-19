@@ -1,6 +1,6 @@
 use bevy_ui::prelude::*;
 
-use crate::UiBase;
+use crate::View;
 
 /// Horizontal Grid Layout
 pub mod h_grid;
@@ -8,13 +8,13 @@ pub mod h_grid;
 pub mod v_grid;
 
 pub mod prelude {
-    pub use super::GridContainer;
+    pub use super::GridView;
     pub use super::h_grid::*;
     pub use super::v_grid::*;
 }
 
 /// Provides a fluent interface for configuring grid layout containers
-pub trait GridContainer: UiBase + Default {
+pub trait GridView: View {
     /// Creates a new grid container with specified alignment and spacing
     fn new(align_items: AlignItems, gap: Val) -> Self {
         let mut stack = Self::default();
