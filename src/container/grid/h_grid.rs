@@ -3,6 +3,7 @@ use bevy_ui::prelude::*;
 
 use crate::background::{BackgroundStyle, BackgroundView};
 use crate::border::{BorderStyle, BorderView};
+use crate::shadow::ShadowView;
 use crate::{View, ViewPack};
 
 use super::GridView;
@@ -19,6 +20,8 @@ pub struct HGrid {
     border: BorderStyle,
     /// Background rendering style (color or image)
     background: BackgroundStyle,
+    /// Shadow rendering style (Vec<ShadowStyle>)
+    shadow: BoxShadow,
 }
 
 impl Default for HGrid {
@@ -35,6 +38,7 @@ impl Default for HGrid {
             },
             border: BorderStyle::default(),
             background: BackgroundStyle::default(),
+            shadow: BoxShadow::default(),
         }
     }
 }
@@ -73,11 +77,17 @@ impl BorderView for HGrid {
     }
 }
 
+impl ShadowView for HGrid {
+    fn shadow_node(&mut self) -> &mut BoxShadow {
+        &mut self.shadow
+    }
+}
+
 impl ViewPack for HGrid {
     fn pack(self) -> impl Bundle {
         let name = self.name;
         let border = self.border.pack();
         let background = self.background.pack();
-        (name, self.node, border, background)
+        (name, self.node, border, background, self.shadow)
     }
 }

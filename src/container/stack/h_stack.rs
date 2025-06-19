@@ -3,6 +3,7 @@ use bevy_ui::prelude::*;
 
 use crate::background::{BackgroundStyle, BackgroundView};
 use crate::border::{BorderStyle, BorderView};
+use crate::shadow::ShadowView;
 use crate::{View, ViewPack};
 
 use super::StackView;
@@ -19,6 +20,8 @@ pub struct HStack {
     border: BorderStyle,
     /// Background rendering style (color or image)
     background: BackgroundStyle,
+    /// Shadow rendering style (Vec<ShadowStyle>)
+    shadow: BoxShadow,
 }
 
 impl Default for HStack {
@@ -35,6 +38,7 @@ impl Default for HStack {
             },
             border: BorderStyle::default(),
             background: BackgroundStyle::default(),
+            shadow: BoxShadow::default(),
         }
     }
 }
@@ -63,11 +67,17 @@ impl BorderView for HStack {
     }
 }
 
+impl ShadowView for HStack {
+    fn shadow_node(&mut self) -> &mut BoxShadow {
+        &mut self.shadow
+    }
+}
+
 impl ViewPack for HStack {
     fn pack(self) -> impl Bundle {
         let name = self.name;
         let border = self.border.pack();
         let background = self.background.pack();
-        (name, self.node, border, background)
+        (name, self.node, border, background, self.shadow)
     }
 }
