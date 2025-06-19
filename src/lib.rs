@@ -37,6 +37,8 @@ use bevy_ui::prelude::*;
 pub mod background;
 // Border UI trait
 pub mod border;
+// Shadow UI Trait
+pub mod shadow;
 
 /// Layouts and containers
 pub mod container;
@@ -45,6 +47,7 @@ pub mod prelude {
     pub use super::background::*;
     pub use super::border::*;
     pub use super::container::prelude::*;
+    pub use super::shadow::*;
     pub use super::{SwoopUiPlugin, View, ViewPack};
 }
 
