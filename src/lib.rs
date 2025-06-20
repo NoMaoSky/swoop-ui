@@ -42,19 +42,26 @@ pub mod background;
 pub mod border;
 // Shadow UI Trait
 pub mod shadow;
+// Absolute positioning
+pub mod position;
 
 /// Button
 pub mod button;
 /// Layouts and containers
 pub mod container;
+/// Text
+pub mod text;
 
 pub mod prelude {
-    pub use super::background::*;
-    pub use super::border::*;
+    pub use super::background::BackgroundView;
+    pub use super::border::BorderView;
+    pub use super::position::PositionView;
+    pub use super::shadow::{BoxShadowView, TextShadowView};
+    pub use super::{SwoopUiPlugin, View};
+
     pub use super::button::prelude::*;
     pub use super::container::prelude::*;
-    pub use super::shadow::*;
-    pub use super::{SwoopUiPlugin, View};
+    pub use super::text::prelude::*;
 }
 
 /// Reserved for future addition of system functions

@@ -2577,6 +2577,8 @@ dependencies = [
  "bevy_color",
  "bevy_ecs",
  "bevy_image",
+ "bevy_math",
+ "bevy_text",
  "bevy_ui",
 ]
 
