@@ -4,7 +4,8 @@ use bevy_ui::prelude::*;
 use crate::View;
 use crate::background::{BackgroundStyle, BackgroundView};
 use crate::border::{BorderStyle, BorderView};
-use crate::shadow::ShadowView;
+use crate::prelude::PositionView;
+use crate::shadow::BoxShadowView;
 
 use super::GridView;
 
@@ -77,8 +78,10 @@ impl BorderView for HGrid {
     }
 }
 
-impl ShadowView for HGrid {
-    fn shadow_node(&mut self) -> &mut BoxShadow {
+impl BoxShadowView for HGrid {
+    fn box_shadow_node(&mut self) -> &mut BoxShadow {
         &mut self.shadow
     }
 }
+
+impl PositionView for HGrid {}
