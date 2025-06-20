@@ -13,17 +13,103 @@ pub mod prelude {
     pub use super::swoop_text::{SText, SwoopText};
 }
 
-#[derive(Bundle, Debug, Clone, Default)]
+/// A bundle representing styled text appearance and layout configuration.
+///
+/// `TextStyle` encapsulates layout, content, font, and color properties typically used
+/// in rendering text elements within a UI system.
+///
+/// This bundle is intended to be used in UI components that require customizable
+/// textual styling such as font sizing, alignment, line breaking, and color.
+///
+/// # Fields
+/// - `layout`: Controls text alignment, line breaking, and justification rules.
+/// - `text`: The actual string content to be displayed.
+/// - `color`: The color of the rendered text.
+/// - `font`: Font face, size, and smoothing attributes.
+///
+/// ```
+#[derive(Bundle, Debug, Clone)]
 pub struct TextStyle {
+    /// Layout preferences such as alignment and line-breaking behavior.
+    layout: TextLayout,
+
+    /// The textual content to render.
     text: Text,
+
+    /// The color used to draw the text.
     color: TextColor,
+
+    /// Font properties including handle, size, and smoothing settings.
     font: TextFont,
+}
+
+impl Default for TextStyle {
+    fn default() -> Self {
+        Self {
+            layout: TextLayout {
+                justify: JustifyText::Center,
+                linebreak: LineBreak::NoWrap,
+            },
+            text: Text::default(),
+            color: TextColor(Srgba::BLACK.into()),
+            font: TextFont {
+                font_size: 16.0,
+                ..Default::default()
+            },
+        }
+    }
+}
+
+impl TextStyle {
+    pub fn button() -> Self {
+        Self {
+            layout: TextLayout {
+                justify: JustifyText::Center,
+                linebreak: LineBreak::NoWrap,
+            },
+            ..Default::default()
+        }
+    }
 }
 
 /// A trait for views that support styled text content using a `TextStyle` bundle.
 pub trait TextView: View {
     /// Returns a mutable reference to the inner `TextStyle` node used for text styling.
     fn text_node(&mut self) -> &mut TextStyle;
+
+    /// Sets the text alignment mode within the layout container.
+    ///
+    /// Controls horizontal alignment of multiline text, such as left-aligned, right-aligned,
+    /// centered, or justified.
+    ///
+    /// # Arguments
+    /// * `justify_text` - A [`JustifyText`] variant indicating the desired alignment mode.
+    ///
+    /// # Example
+    /// ```ignore
+    /// view.text_alignment(JustifyText::Center);
+    /// ```
+    fn text_alignment(mut self, justify_text: JustifyText) -> Self {
+        self.text_node().layout.justify = justify_text;
+        self
+    }
+
+    /// Sets the line-breaking behavior of the text content.
+    ///
+    /// Determines how and when lines wrap, such as breaking on word boundaries,
+    /// characters, or disabling wrapping altogether.
+    ///
+    /// # Arguments
+    /// * `line_break` - A [`LineBreak`] variant specifying the wrapping strategy.
+    ///
+    /// # Example
+    /// ```ignore
+    /// view.text_linebreak(LineBreak::WordWrap);
+    /// ```
+    fn text_linebreak(mut self, line_break: LineBreak) -> Self {
+        self.text_node().layout.linebreak = line_break;
+        self
+    }
 
     /// Sets the string content of the text node.
     ///

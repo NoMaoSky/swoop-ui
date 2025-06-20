@@ -4,6 +4,9 @@
 //! Now only some packaged candies are generated, no additional functions, maybe they will be added later,
 //! a plugin is reserved, but it has not been used yet
 //!
+//! Most methods implement Bundle and can be generated directly.
+//! However, some packaging requires multiple levels,
+//! so ViewToBundle is implemented and the pack() method is called to convert it into impl Bundle.
 //!
 //! # UI Layout Overview
 //!
@@ -57,7 +60,7 @@ pub mod prelude {
     pub use super::border::BorderView;
     pub use super::position::PositionView;
     pub use super::shadow::{BoxShadowView, TextShadowView};
-    pub use super::{SwoopUiPlugin, View};
+    pub use super::{SwoopUiPlugin, View, ViewToBundle};
 
     pub use super::button::prelude::*;
     pub use super::container::prelude::*;
@@ -68,7 +71,7 @@ pub mod prelude {
 pub struct SwoopUiPlugin;
 
 /// Provides common builder-style methods for UI configuration
-pub trait View: Bundle + Debug + Clone + Default {
+pub trait View: Debug + Clone + Default {
     /// Short Default Method
     fn new() -> Self {
         Self::default()
@@ -117,6 +120,10 @@ pub trait View: Bundle + Debug + Clone + Default {
         self.node_node().height = height;
         self
     }
+}
+
+pub trait ViewToBundle: View {
+    fn pack(self) -> impl Bundle;
 }
 
 impl Plugin for SwoopUiPlugin {

@@ -1,12 +1,14 @@
+use bevy_color::prelude::*;
 use bevy_ecs::prelude::*;
+use bevy_math::prelude::*;
 use bevy_ui::prelude::*;
 
-use crate::View;
 use crate::background::BackgroundStyle;
 use crate::border::{BorderStyle, BorderView};
 use crate::prelude::{BackgroundView, PositionView, StackView};
 use crate::shadow::{BoxShadowView, TextShadowView};
 use crate::text::{TextStyle, TextView};
+use crate::{View, ViewToBundle};
 
 /// A horizontally laid-out button view that includes styling for border, background,
 /// box shadow, and text shadow.
@@ -31,7 +33,7 @@ use crate::text::{TextStyle, TextView};
 ///     .font(my_font)
 ///     .background_color(Color::rgb(0.2, 0.6, 0.8)));
 /// ```
-#[derive(Bundle, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct TextButton {
     /// Name tag for debugging or entity inspection.
     name: Name,
@@ -61,7 +63,7 @@ pub struct TextButton {
 impl Default for TextButton {
     fn default() -> Self {
         Self {
-            name: Name::new("SwoopButton"),
+            name: Name::new("TextButton"),
             node: Node {
                 display: Display::Flex,
                 flex_direction: FlexDirection::Row,
@@ -74,8 +76,11 @@ impl Default for TextButton {
             border: BorderStyle::button(),
             background: BackgroundStyle::button(),
             box_shadow: BoxShadow::default(),
-            text: TextStyle::default(),
-            text_shadow: TextShadow::default(),
+            text: TextStyle::button(),
+            text_shadow: TextShadow {
+                offset: Vec2::ZERO,
+                color: Srgba::NONE.into(),
+            },
         }
     }
 }
@@ -87,6 +92,20 @@ impl View for TextButton {
 
     fn node_node(&mut self) -> &mut Node {
         &mut self.node
+    }
+}
+
+impl ViewToBundle for TextButton {
+    fn pack(self) -> impl Bundle {
+        (
+            self.name,
+            self.node,
+            self.botton,
+            self.border,
+            self.background,
+            self.box_shadow,
+            children![self.text, self.text_shadow],
+        )
     }
 }
 
