@@ -25,6 +25,12 @@ pub trait BackgroundView: View {
         };
         self
     }
+
+    /// Sets background image mode
+    fn background_image_mode(mut self, image_mode: NodeImageMode) -> Self {
+        self.background_node().image.image_mode = image_mode;
+        self
+    }
 }
 
 /// Defines how a container should be visually styled in the background

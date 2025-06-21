@@ -70,38 +70,56 @@ pub mod prelude {
 /// Reserved for future addition of system functions
 pub struct SwoopUiPlugin;
 
-/// Provides common builder-style methods for UI configuration
+/// Provides a builder-style trait for configuring UI elements
+/// using a fluent interface.
+///
+/// Types implementing `View` must define how to access their `Name`
+/// and `Node` components. This trait simplifies layout and styling
+/// tasks through expressive method chaining.
 pub trait View: Debug + Clone + Default {
-    /// Short Default Method
+    /// Creates a new instance using the type's `Default` implementation.
     fn new() -> Self {
         Self::default()
     }
 
+    /// Constructs a new instance and sets its `Name` component.
+    ///
+    /// # Arguments
+    /// * `name` - A name to assign, typically used for entity identification or debugging.
     fn from_name(name: impl Into<Cow<'static, str>>) -> Self {
         let mut view = Self::default();
         view.name_node().set(name);
         view
     }
 
-    /// Returns a mutable reference to the entity's Name component
+    /// Provides mutable access to the underlying `Name` component.
     fn name_node(&mut self) -> &mut Name;
 
-    /// Returns a mutable reference to the entity's Node component
+    /// Provides mutable access to the underlying `Node` component.
     fn node_node(&mut self) -> &mut Node;
 
-    /// Sets the Name component
+    /// Sets the `Name` component.
+    ///
+    /// Useful for identifying the entity during development or debugging.
     fn name(mut self, name: impl Into<Cow<'static, str>>) -> Self {
         self.name_node().set(name);
         self
     }
 
-    /// Applies padding to the Node
+    /// Sets the padding (insets) around the content of the `Node`.
+    ///
+    /// # Arguments
+    /// * `padding` - A `UiRect` specifying top, right, bottom, and left spacing.
     fn padding(mut self, padding: UiRect) -> Self {
         self.node_node().padding = padding;
         self
     }
 
-    /// Sets width and height of the Node
+    /// Sets both width and height of the `Node`.
+    ///
+    /// # Arguments
+    /// * `width` - The horizontal size (`Val::Px`, `Val::Percent`, etc.).
+    /// * `height` - The vertical size.
     fn frame(mut self, width: Val, height: Val) -> Self {
         let node = self.node_node();
         node.width = width;
@@ -109,15 +127,39 @@ pub trait View: Debug + Clone + Default {
         self
     }
 
-    /// Sets the width of the Node
-    fn width(mut self, width: Val) -> Self {
-        self.node_node().width = width;
+    /// Sets the width of the `Node`.
+    fn width(mut self, val: Val) -> Self {
+        self.node_node().width = val;
         self
     }
 
-    /// Sets the height of the Node
-    fn height(mut self, height: Val) -> Self {
-        self.node_node().height = height;
+    /// Sets the maximum width constraint.
+    fn max_width(mut self, val: Val) -> Self {
+        self.node_node().max_width = val;
+        self
+    }
+
+    /// Sets the minimum width constraint.
+    fn min_width(mut self, val: Val) -> Self {
+        self.node_node().min_width = val;
+        self
+    }
+
+    /// Sets the height of the `Node`.
+    fn height(mut self, val: Val) -> Self {
+        self.node_node().height = val;
+        self
+    }
+
+    /// Sets the maximum height constraint.
+    fn max_height(mut self, val: Val) -> Self {
+        self.node_node().max_height = val;
+        self
+    }
+
+    /// Sets the minimum height constraint.
+    fn min_height(mut self, val: Val) -> Self {
+        self.node_node().min_height = val;
         self
     }
 }
