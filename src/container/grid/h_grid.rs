@@ -54,17 +54,7 @@ impl View for HGrid {
     }
 }
 
-impl GridView for HGrid {
-    fn grid_auto_track(mut self, tracks: Vec<GridTrack>) -> Self {
-        self.node_node().grid_auto_columns = tracks;
-        self
-    }
-
-    fn grid_template_track(mut self, tracks: Vec<RepeatedGridTrack>) -> Self {
-        self.node_node().grid_template_columns = tracks;
-        self
-    }
-}
+impl GridView for HGrid {}
 
 impl BackgroundView for HGrid {
     fn background_node(&mut self) -> &mut BackgroundStyle {

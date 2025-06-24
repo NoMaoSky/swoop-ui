@@ -54,17 +54,7 @@ impl View for VGrid {
     }
 }
 
-impl GridView for VGrid {
-    fn grid_auto_track(mut self, tracks: Vec<GridTrack>) -> Self {
-        self.node_node().grid_auto_rows = tracks;
-        self
-    }
-
-    fn grid_template_track(mut self, tracks: Vec<RepeatedGridTrack>) -> Self {
-        self.node_node().grid_template_rows = tracks;
-        self
-    }
-}
+impl GridView for VGrid {}
 
 impl BackgroundView for VGrid {
     fn background_node(&mut self) -> &mut BackgroundStyle {
