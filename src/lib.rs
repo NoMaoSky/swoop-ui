@@ -78,6 +78,8 @@ pub struct SwoopUiPlugin;
 /// tasks through expressive method chaining.
 pub trait View: Debug + Clone + Default {
     /// Creates a new instance using the type's `Default` implementation.
+    ///
+    /// This is a convenient shorthand when no customization is needed.
     fn new() -> Self {
         Self::default()
     }
@@ -85,7 +87,8 @@ pub trait View: Debug + Clone + Default {
     /// Constructs a new instance and sets its `Name` component.
     ///
     /// # Arguments
-    /// * `name` - A name to assign, typically used for entity identification or debugging.
+    /// * `name` - A name to assign to this instance, typically used for entity
+    ///   identification or debugging purposes.
     fn from_name(name: impl Into<Cow<'static, str>>) -> Self {
         let mut view = Self::default();
         view.name_node().set(name);
@@ -93,14 +96,21 @@ pub trait View: Debug + Clone + Default {
     }
 
     /// Provides mutable access to the underlying `Name` component.
+    ///
+    /// This allows for direct manipulation or inspection of the `Name`.
     fn name_node(&mut self) -> &mut Name;
 
     /// Provides mutable access to the underlying `Node` component.
+    ///
+    /// Useful when applying layout or transform properties.
     fn node_node(&mut self) -> &mut Node;
 
-    /// Sets the `Name` component.
+    /// Sets the `Name` component of this instance.
     ///
-    /// Useful for identifying the entity during development or debugging.
+    /// Helpful for tracking or debugging UI entities.
+    ///
+    /// # Arguments
+    /// * `name` - The name to assign, provided as a `&str`, `String`, or `Cow`.
     fn name(mut self, name: impl Into<Cow<'static, str>>) -> Self {
         self.name_node().set(name);
         self
@@ -109,17 +119,17 @@ pub trait View: Debug + Clone + Default {
     /// Sets the padding (insets) around the content of the `Node`.
     ///
     /// # Arguments
-    /// * `padding` - A `UiRect` specifying top, right, bottom, and left spacing.
+    /// * `padding` - A `UiRect` defining spacing on all four sides.
     fn padding(mut self, padding: UiRect) -> Self {
         self.node_node().padding = padding;
         self
     }
 
-    /// Sets both width and height of the `Node`.
+    /// Sets both the width and height of the `Node`.
     ///
     /// # Arguments
-    /// * `width` - The horizontal size (`Val::Px`, `Val::Percent`, etc.).
-    /// * `height` - The vertical size.
+    /// * `width` - The desired width using `Val::Px`, `Val::Percent`, etc.
+    /// * `height` - The desired height using the same `Val` enum.
     fn frame(mut self, width: Val, height: Val) -> Self {
         let node = self.node_node();
         node.width = width;
@@ -128,38 +138,86 @@ pub trait View: Debug + Clone + Default {
     }
 
     /// Sets the width of the `Node`.
+    ///
+    /// # Arguments
+    /// * `val` - The desired width value.
     fn width(mut self, val: Val) -> Self {
         self.node_node().width = val;
         self
     }
 
-    /// Sets the maximum width constraint.
+    /// Sets the maximum width constraint of the `Node`.
+    ///
+    /// Prevents the node from expanding beyond this limit.
     fn max_width(mut self, val: Val) -> Self {
         self.node_node().max_width = val;
         self
     }
 
-    /// Sets the minimum width constraint.
+    /// Sets the minimum width constraint of the `Node`.
+    ///
+    /// Ensures the node does not shrink below this value.
     fn min_width(mut self, val: Val) -> Self {
         self.node_node().min_width = val;
         self
     }
 
     /// Sets the height of the `Node`.
+    ///
+    /// # Arguments
+    /// * `val` - The desired height value.
     fn height(mut self, val: Val) -> Self {
         self.node_node().height = val;
         self
     }
 
-    /// Sets the maximum height constraint.
+    /// Sets the maximum height constraint of the `Node`.
+    ///
+    /// Prevents the node from growing beyond this value.
     fn max_height(mut self, val: Val) -> Self {
         self.node_node().max_height = val;
         self
     }
 
-    /// Sets the minimum height constraint.
+    /// Sets the minimum height constraint of the `Node`.
+    ///
+    /// Ensures the node maintains at least this size.
     fn min_height(mut self, val: Val) -> Self {
         self.node_node().min_height = val;
+        self
+    }
+
+    /// Sets the `flex_grow` factor of the `Node`.
+    ///
+    /// Determines how much the node should grow relative to its siblings.
+    fn flex_grow(mut self, grow: f32) -> Self {
+        self.node_node().flex_grow = grow;
+        self
+    }
+
+    /// Sets the `flex_shrink` factor of the `Node`.
+    ///
+    /// Controls how much the node should shrink when space is constrained.
+    fn flex_shrink(mut self, shrink: f32) -> Self {
+        self.node_node().flex_shrink = shrink;
+        self
+    }
+
+    /// Assigns this node to a specific grid row in a grid layout.
+    ///
+    /// # Arguments
+    /// * `row` - The grid row position.
+    fn grid_row(mut self, row: GridPlacement) -> Self {
+        self.node_node().grid_row = row;
+        self
+    }
+
+    /// Assigns this node to a specific grid column in a grid layout.
+    ///
+    /// # Arguments
+    /// * `column` - The grid column position.
+    fn grid_column(mut self, column: GridPlacement) -> Self {
+        self.node_node().grid_column = column;
         self
     }
 }
